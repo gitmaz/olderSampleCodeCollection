@@ -1,0 +1,8 @@
+
+<?php $__env->startSection('content'); ?>
+   <h4>Cache cleared!</h4> 
+  
+   <br /><br />
+   <b>please access cached again to memorize in cache(next cache access will be fast!).</b>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

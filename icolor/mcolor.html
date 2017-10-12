@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" type="text/css" href="tipr/tipr.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+    <script type="text/javascript" src="./js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="./js/Chart.min.js"></script>
+    <script type="text/javascript" src="./js/tipr.min.js"></script>
+    <script type="text/javascript" src="./js/painter.js"></script>
+    <script type="text/javascript" src="./js/main.js"></script>
+
+</head>
+<script>
+
+
+</script>
+<body>
+    <div id="divMainPanel">
+        <div id="divColorCirclePanel">
+            <div id="palletes">
+                <div id="palletesNavigator">
+                    <div id="palletesToLighter"></div>
+                    <div id="palletesToDarker"></div>
+                </div>
+                <div id="palletes_frames">
+                    <div id="palletes_rects_-1"></div>
+                    <div id="palletes_rects_1"></div>
+                    <div id="palletes_rects_2"></div>
+                </div>
+            </div>
+        </div>
+        <div id="divGridPanel">
+            <div id="colorGrid"></div>
+        </div>
+
+    </div>
+    <div id="message-bar">
+        <div id="pieArea">
+            <canvas id="colorPie" style="padding: 0px;height:100%"></canvas>
+        </div>
+        <div class="divGaugeAll gaugeWide">
+
+        <div class="divGaugeColor narrowColor" id="divGaugeColor1"></div>
+        <div class="divGaugeColor" id="divGaugeColor2"></div>
+        <div class="divGaugeTags">
+            &nbsp;c<br>
+            &nbsp;m<br>
+            &nbsp;y<br>
+            &nbsp;k
+        </div>
+        <div class="divProgressBars">
+            <div class="divProgressBack">
+                <div id="divCyanProgress1"></div>
+            </div>
+
+            <div class="divProgressBack">
+                <div id="divMagentaProgress1"></div>
+            </div>
+            <div class="divProgressBack">
+                <div id="divYellowProgress3"></div>
+            </div>
+            <div class="divProgressBack">
+                <div id="divBlackProgress"></div>
+            </div>
+
+            <div class="colorScaleTableDiv leftColorScaleTableDiv hardColorScaleTableDiv">
+                <table class="greedyTable hardGrid">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="colorScaleTableDiv leftColorScaleTableDiv lightColorScaleTableDiv">
+                <table class="greedyTable lightGrid">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="colorPickNumerics">
+            <div id="divPickR1">0</div>
+            <div id="divPickY1">0</div>
+            <div id="divPickB1">0</div>
+            <div id="divPickK">0</div>
+
+        </div>
+    </div>
+        <div class="divGaugeAll gaugeLessWide">
+        <div class="divGaugeTags">
+            &nbsp;<span id="spnUsuallyO">b</span><br>
+            &nbsp;<span id="spnUsuallyG">r</span><br>
+            &nbsp;<span id="spnUsuallyP">g</span><br>
+            &nbsp;<span id="spnX1">x</span>
+        </div>
+        <div class="divProgressBars">
+            <div class="divProgressBack">
+                <div id="divBlueProgress4"></div>
+            </div>
+
+            <div class="divProgressBack">
+                <div id="divRedProgress4"></div>
+            </div>
+            <div class="divProgressBack">
+                <div id="divGreenProgress4"></div>
+            </div>
+            <div class="divProgressBack">
+                <div id="divCyanProgress5"></div>
+                <div id="divMagentaProgress5"></div>
+                <div id="divYellowProgress5"></div>
+            </div>
+
+            <div class="colorScaleTableDiv middleColorScaleTableDiv hardColorScaleTableDiv">
+                <table class="greedyTable hardGrid">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="colorScaleTableDiv middleColorScaleTableDiv lightColorScaleTableDiv">
+                <table class="greedyTable lightGrid">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="colorPickNumerics BiggerNumerics">
+            <div id="divPickR2">0</div>
+            <div id="divPickG2">0</div>
+            <div id="divPickB2">0</div>
+            <div id="divPickX">0</div>
+
+        </div>
+    </div>
+        <div class="divGaugeAll gaugeLessWide">
+        <div class="divGaugeTags">
+            <span id="spnUsuallyO2">&nbspo</span><br>
+            <span id="spnUsuallyG2">&nbsp;g</span><br>
+            <span id="spnUsuallyP2">&nbsp;p</span>
+            <span id="spnX2">&nbsp;x</span>
+        </div>
+        <div class="divProgressBars">
+            <div class="divProgressBack">
+                <div id="divOrangeProgress6"></div>
+                <div id="divCyanProgress7"></div>
+            </div>
+
+            <div class="divProgressBack">
+                <div id="divGreenProgress6"></div>
+                <div id="divMagentaProgress7"></div>
+            </div>
+            <div class="divProgressBack">
+                <div id="divPurpleProgress6"></div>
+                <div id="divYellowProgress7"></div>
+            </div>
+            <div class="divProgressBack">
+                <div id="divPurpleProgress6"></div>
+                <div id="divYellowProgress7"></div>
+            </div>
+
+            <div class="colorScaleTableDiv rightColorScaleTableDiv hardColorScaleTableDiv2">
+                <table class="greedyTable hardGrid">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="colorScaleTableDiv rightColorScaleTableDiv lightColorScaleTableDiv2">
+                <table class="greedyTable lightGrid">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="colorPickNumerics BiggerNumerics">
+            <div id="divPickO3">0</div>
+            <div id="divPickG3">0</div>
+            <div id="divPickP3">0</div>
+            <div id="divPickXX">0</div>
+
+        </div>
+    </div>
+        <div class="colorPicks">
+        <table class="greedyTable hardGrid">
+            <tr>
+                <td>
+                    <div class="colorPick" id="divColorPick1"></div>
+                </td>
+                <td>
+                    <div class="colorPick" id="divColorPick2"></div>
+                </td>
+                <td>
+                    <div class="colorPick" id="divColorPick3"></div>
+                </td>
+                <td>
+                    <div class="colorPick" id="divColorPick4"></div>
+                </td>
+                <td>
+                    <div class="colorPick" id="divColorPick5"></div>
+                </td>
+                <td>
+                    <div class="colorPick" id="divColorPick6"></div>
+                </td>
+                <td>
+                    <div class="colorPick" id="divColorPick7"></div>
+                </td>
+                <td>
+                    <div class="colorPick" id="divColorPick8"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+        <div class="mouse-mode-selection">
+        <span><input type="radio" value="single" name="rMouseModeSelection" class="radios-mouse-selection-mode"
+                     checked="checked">S</span>
+        <span><input type="radio" value="three" name="rMouseModeSelection" class="radios-mouse-selection-mode">T</span>
+        <span><input type="radio" value="none" name="rMouseModeSelection" class="radios-mouse-selection-mode">N</span>
+    </div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+
+<?php $__env->startSection('content'); ?>
+   <h4>About</h4> 
+  
+   <br />
+   <b>Layer Cache by: Pip Jones. Client code by: Maziar Navabi</b><br />
+   <b>Technology:  Laravel 4</b>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

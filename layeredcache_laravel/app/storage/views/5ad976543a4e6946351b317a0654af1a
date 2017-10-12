@@ -1,0 +1,8 @@
+
+<?php $__env->startSection('content'); ?>
+   <h4>Direct access to data:</h4> 
+   <b>data:</b>&nbsp;<?php echo $data; ?>
+   <br /><br />
+   <b>data access time:</b>&nbsp;<?php echo $elapsed; ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

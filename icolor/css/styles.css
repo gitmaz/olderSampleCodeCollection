@@ -1,0 +1,515 @@
+body {
+    padding: 0px;
+    margin: 0px!important;
+}
+
+#colorPie {
+    margin-top: -15px;
+    margin-left: -30px;
+    height: 70px !important;
+    width: 130px !important;
+}
+
+#divMainPanel {
+    width: 1300px;
+    height: 750px;
+    background-color: dimgrey;
+    padding: 0px;
+    -moz-transform: scale(0.7);
+    -moz-transform-origin: 0 0;
+}
+
+#divColorCirclePanel {
+    width: 2250px;
+    background-color: dimgrey;
+    float: left;
+    zoom: 0.79;
+    -moz-transform: scale(0.8);
+    -moz-transform-origin: 0 0;
+}
+
+#divGridPanel {
+    background-color: dimgrey;
+    width: 45%;
+    height: 100%;
+    float: right;
+    zoom: 0.78;
+    -moz-transform: scale(0.78);
+    -moz-transform-origin: 0 0;
+}
+
+.cl {
+    clear: left;
+}
+
+.tube {
+    width: 80px;
+    height: 40px;
+    float: left;
+}
+
+.tubeWhite {
+    width: 80px;
+    height: 40px;
+    float: left;
+    border: 1px solid black;
+}
+
+.floatLeft {
+    width: 10px;
+    height: 430px;
+    float: left
+}
+
+#paintchart1, #paintchart2, #paintchart3 {
+    width: 400px;
+    float: left
+}
+
+.palette {
+    color: #a0a0a0;
+    margin: 2px 0 2px 0;
+    float: left
+}
+
+#mixing-palette1, #mixing-palette2, #mixing-palette3 {
+    width: 400px;
+    height: 400px;
+    border: 1px solid #ddd;
+}
+
+#rd {
+    padding: 4px;
+    display: inline;
+}
+
+#ye {
+    padding: 4px;
+    display: inline;
+}
+
+#bl {
+    padding: 4px;
+    display: inline;
+}
+
+#hexa {
+    color: #a0a0a0;
+    margin: 0 2px;
+}
+
+#red {
+    background-color: rgb(255, 0, 0);
+    cursor: pointer;
+    cursor: hand;
+}
+
+#yellow {
+    background-color: rgb(255, 255, 0);
+    cursor: pointer;
+    cursor: hand;
+}
+
+#blue {
+    background-color: rgb(0, 0, 255);
+    ursor: pointer;
+    cursor: hand;
+}
+
+#orange {
+    background-color: rgb(255, 160, 0);
+    cursor: pointer;
+    cursor: hand;
+}
+
+#green {
+    background-color: rgb(0, 128, 0);
+    cursor: pointer;
+    cursor: hand;
+}
+
+#purple {
+    background-color: rgb(128, 0, 128);
+    cursor: pointer;
+    cursor: hand;
+}
+
+#palletes {
+    z-index: 7;
+    position: absolute;;
+    left: 0px;
+    top: 0px;
+    width: 750px;
+    height: 750px;
+    overflow-y: hidden;
+    overflow-x: scroll
+}
+
+#palletes_frames {
+    width: 2300px;
+    height: 750px;
+    margin-left: -750px
+}
+
+#palletes_rects_-1 {
+    width: 750px;
+    height: 750px;
+    background-color: #a0a0a0;
+    min-width: 700px;
+    min-height: 700px;
+    float: left
+}
+
+#palletes_rects_1 {
+    width: 750px;
+    height: 750px;
+    background-color: #a0a0a0;
+    min-width: 700px;
+    min-height: 700px;
+    float: left
+}
+
+#palletes_rects_2 {
+    width: 750px;
+    height: 750px;
+    background-color: #a0a0a0;
+    min-width: 700px;
+    min-height: 700px;
+    float: left
+}
+
+#palletesNavigator {
+    width: 64px;
+    height: 34px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+}
+
+#palletesToLighter {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border: 1px solid black;
+    float: left;
+
+}
+
+#palletesToDarker {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    background-color: darkgray;
+    border: 1px solid black;
+    float: left;
+}
+
+#colorGrid {
+    width: 700px;;
+    height: 680px;
+    background: dimgrey;
+}
+
+#message-bar {
+    height: 60px;
+    background-color: #3c1d07;
+    position: fixed;
+    bottom: 0px;
+    width: 1380px;
+    -moz-transform: scale(0.75);
+    -moz-transform-origin: 0 0;
+}
+
+#pieArea {
+    width: 70px;
+    height: 100%;
+    max-width: 88px;
+    max-height: 40px;
+    background-color: #3c1d07;
+    float: left
+}
+
+.divGaugeAll {
+    float: left;
+    height: 55px;
+}
+
+.gaugeWide {
+    width: 280px;
+}
+
+.gaugeLessWide {
+    width: 233px;
+}
+
+.divGaugeColor {
+    float: left;
+    width: 36px;
+    height: 98%;
+    background-color: black;
+    border: 2px solid white;
+}
+
+.narrowColor {
+    width: 18px;
+    border-right: 0px;
+}
+
+.divGaugeTags {
+    width: 20px;
+    height: 57px;
+    float: left;
+    background-color: #a0a0a0;
+    line-height: 14px;
+}
+
+.divProgressBars {
+    float: left;
+    width: 150px;
+}
+
+.divProgressBack {
+
+    width: 100%;
+    height: 10px;
+    background-color: darkgray;
+    padding-bottom: 2px;
+    padding-top: 2px;
+}
+
+#divRedProgress1 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #ff0000;
+}
+
+#divYellowProgress1 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #ffff00;
+}
+
+#divBlueProgress1 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #0000ff;
+}
+
+#divCyanProgress1 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #00ffff;
+}
+
+#divMagentaProgress1 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #ff00ff;
+}
+
+#divYellowProgress3 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #ffff00;
+}
+
+#divCyanProgress5 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #00ffff;
+    float: left;
+}
+
+#divMagentaProgress5 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #ff00ff;
+    float: left;
+}
+
+#divYellowProgress5 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #ffff00;
+    float: right;
+    float: left;
+}
+
+#divBlackProgress {
+
+    width: 0%;
+    height: 100%;
+    background-color: #000000;
+    float: right;
+    float: left;
+}
+
+#divOrangeProgress1 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #ff7200;
+    float: left;
+}
+
+#divOrangeProgress6 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #ff7200;
+    float: left;
+}
+
+#divGreenProgress1 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #008000;
+    float: left;
+}
+
+#divGreenProgress6 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #008000;
+    float: left;
+}
+
+#divPurpleProgress1 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #800080;
+    float: left;
+}
+
+#divPurpleProgress6 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #800080;
+    float: left;
+}
+
+#divBlueProgress4 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #0000ff;
+    float: left;
+}
+
+#divRedProgress4 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #ff0000;
+    float: left;
+}
+
+#divGreenProgress4 {
+
+    width: 0%;
+    height: 100%;
+    background-color: #00ff00;
+    float: left;
+}
+
+.colorScaleTableDiv {
+    position: absolute;
+    width: 150px;
+    height: 100%;
+    top: 0;
+}
+
+.leftColorScaleTableDiv {
+    left: 147px;
+}
+
+.middleColorScaleTableDiv {
+    left: 369px;
+}
+
+.rightColorScaleTableDiv {
+    left: 603px;
+}
+
+.colorPickNumerics {
+
+    width: 20px;
+    height: 55px;
+    float: left;
+    background-color: white;
+    border: 1px solid #3c1d07;
+    font-size: 0.7em;
+    padding-left: 4px;
+}
+
+.BiggerNumerics {
+
+    width: 30px;
+}
+
+.hardColorScaleTableDiv {
+    z-index: 10;
+}
+
+.lightColorScaleTableDiv {
+    z-index: 11;
+}
+
+.greedyTable {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+}
+
+.hardGrid td {
+    border: 2px solid black;
+}
+
+.lightGrid td {
+    border: 1px solid black;
+}
+
+.colorPicks {
+    width: 150px;
+    position: relative; /*absolute;*/
+    height: 100%;
+    /*top: 0;
+    left: 715px;*/
+    background-color: white;
+    float: left;
+}
+
+.colorPick {
+    width: 14px;
+    height: 51px;
+    background-color: black;
+}
+
+.tip:hover {
+
+    border: 3px dotted yellow;
+}
+
+.mouse-mode-selection {
+    margin-left: 80px;
+    width: 120px;
+    position: relative; /*absolute;*/
+    height: 100%;
+    background-color: white;
+    float: left;
+}

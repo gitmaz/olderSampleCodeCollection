@@ -1,0 +1,6 @@
+<html><!-- old layout using blade's direct (default) inclusion of content -->
+	<body>
+	 <h1>Fleetcutter Interview Questions</h1>
+        	<?php echo $__env->yieldContent('content'); ?>
+    </body>
+</html>

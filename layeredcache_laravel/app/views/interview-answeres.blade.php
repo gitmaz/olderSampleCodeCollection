@@ -1,0 +1,277 @@
+@extends('layout-interv')
+
+@section('content')
+  
+		<h4>
+			Fleetcutter Interview Q&amp;A</h4>
+		<p>
+			<b>Question 1 - Debugging Challenge</b>&nbsp;<br />
+			<br />
+			<span>What is wrong with the following test?<br />
+			<i>Hint: There are a few problems: 1 critical problem, ~3 minor issues, ~2 bad styles. </i> </span></p>
+		<p>
+			&lt;?php</p>
+		<p>
+			&nbsp; require_once &#39;PHPUnit/Extensions/SeleniumTestCase.php&#39;;<br />
+			&nbsp; require_once &quot;../CommonTestFunctions.php&quot;;<br />
+			&nbsp;</p>
+		<p>
+			&nbsp; class IsSelniumRunning extends CommonTestFunctions<br />
+			&nbsp; {<br />
+			&nbsp; &nbsp; &nbsp; /**<br />
+			&nbsp; &nbsp; &nbsp; * @test<br />
+			&nbsp; &nbsp; &nbsp; */<br />
+			&nbsp; &nbsp; &nbsp; // see if its ocnnect<br />
+			&nbsp;&nbsp; &nbsp;&nbsp; public function testIsSeleniumRunning()<br />
+			&nbsp;&nbsp;&nbsp;&nbsp; {<br />
+			&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; $selenium_running = false;<br />
+			&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; $fp = @fsockopen(&#39;localhost&#39;, 4444);<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ($fp !== false) {<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; $selenium_running = true;<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; fclose($fp);<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $this&shy;&gt;assertTrue($selenium_running=true,&quot;Selenium Standalone Server NOT RUNNING!&quot;);<br />
+			&nbsp; &nbsp; }<br />
+			&nbsp; }<br />
+			?&gt;</p>
+		<p>
+			<a id="1"  href="javascript:void(0);" onclick="answerLinkCliked(this);"><b>Answer:</b></a></p>
+	<div id="divAnswer1" style="display: none">	
+		<p>
+			1-Critical error:</p>
+		<p>
+			&nbsp;&nbsp;&nbsp;&nbsp; You need to define a timeout as fsockopen sometimes returns nothing (null)if it takes too long to return<br />
+			&nbsp;&nbsp;&nbsp; since null is not false therefore if($fp!==false) clause will get hit and we get a passed test despite a failiure in connection<br />
+			&nbsp;&nbsp;&nbsp; (test is not actually passed until we fix the problem for connection and test again).</p>
+		<p>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; So it is important to set a proper timeout long enough to be sure that fsockopen will return either false or a resource<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; It is still needed to check if $fp is not null and otherwise fail the test.<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //put way up at the top of the file<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ini_set(&quot;default_socket_timeout&quot;, 1); // set default socket connect timeout<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //or put it explicitly inline as $timeout<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $fp=fsockopen ( $hostname , $port , $timeout);<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if($fp!==false){<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if($fp==NULL) fail the test;<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else {<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; close($fp);<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>pass the test</em><br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }...</p>
+		<p>
+			<br />
+			&nbsp;&nbsp;&nbsp; 2- small issues:<br />
+			&nbsp;&nbsp;&nbsp; - &quot;$this&shy;&gt;assertTrue($selenium_running=true,...&quot; will surpass the testing even it has actually been failed,Because<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;$this&shy;&gt;assertTrue(true,...&quot; is always passed.</p>
+		<p>
+			&nbsp;&nbsp;&nbsp;&nbsp; - @fsockopen : @ in front of fsockopen will suppress any php error that our fsockopen may generate.It is better&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; to also catch those and fail the test if any for our test to be completely error prone.</p>
+		<p>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If @ is intended to remove the warning clutter fsockopen may generate,@ will not be any good .The better way is to&nbsp; put this line of code on try catch block.</p>
+		<p>
+			3-bad styles:<br />
+			&nbsp;&nbsp;&nbsp; - $this&shy;&gt;assertTrue($selenium_running=true : if inline setting of selenium_running to true has been put for the purpose of&nbsp; temporyly</p>
+		<p>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; muting this test to check for other stuff ,it is not a good style as it is better to put this temporary modification in an if statement that check some constant: for ex:</p>
+		<p>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(BYPASS_SELENIUM_TEST) log_warning(&quot;Selenium running test bypassed&quot;) ;</p>
+		<p>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else this&shy;&gt;assertTrue($selenium_running,...);</p>
+		<p>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This will reduce the risk of forgetting to revert it back to enable the test</p>
+		<p>
+			&nbsp; - better to use 127.0.0.1 instead of localhost as in some OSes it might not work properly.fsockopen needs ip address for first parameter.</p>
+		<p>
+			&nbsp;&nbsp;&nbsp; DNSes sometimes return a friendly response even if a domain name is unaccessible which will not get caught by our test as error.So bypas DNS by supplying ip address.Also it is ood practice to put configuration of connection (ip,port,imeout) as a define on top of the file and reuse it in the test.</p>
+		<p>
+			&nbsp; - Not sure but I dont think replacing if($fp!==false) with if(!$fp) is good practice as in php strict comparison (!== and === )is faster because it first compares types and then values but != will try to convert the value to boolean which needs parsing if retuned value is not boolean(for example when it is a resource -ie: when fsockopen is successfull).</p>
+		
+	 </div>	<p>
+			<b>Question 2 - Internet General Knowledge</b>&nbsp;<br />
+			<br />
+			<span>What is this graph showing?</span><br />
+			<img src="{{$baseUrl}}/img/graph.jpg" /><br />
+			<a id="2"  href="javascript:void(0);" onclick="answerLinkCliked(this);"><b>Answer:</b></a></p>
+	 <div id="divAnswer2" style="display: none">	
+		<p>
+			&nbsp;&nbsp; I have&#39;nt encountered this graph but this is my guess : (vertical axis:users ,horizontal: release dates ,numbers on graph: versions)<br />
+			&nbsp;&nbsp; It seems to depict the number or percentage of users for new releases of some software (Firefox browser?! as doing some google on the numbers).</p>
+		<p>
+			&nbsp;&nbsp; New releases cause a nearly swift switching of the users to the new version which creates a new graph as well as supressing the previous version&#39;s graph with a sharp decline. Other versions will still remain though with much less users.There is also an overshoot showing an increase on audience on starting of some releases.</p>
+		</div>
+		<p>
+			<b>Question 3 - SQL Optimisation</b></p>
+		<p>
+			Why does this query run slowly?</p>
+		<p>
+			EXPLAIN shows that although all columns are indexed appropriately, the MySQL server is still<br />
+			using &ldquo;temporary table&rdquo; and &ldquo;filesort&rdquo;, and is listing start_time as a &ldquo;possible index&rdquo; even though it&rsquo;s already indexed.</p>
+		<p>
+			Hint: You do not need to know the table structure etc. the problem is just in the query!</p>
+		<p>
+			<b>Select mrbs_room.unit_id,<br />
+			driver.id as driver_id<br />
+			FROM mrbs_entry<br />
+			LEFT JOIN driver on driver.id=mrbs_entry.driverid<br />
+			LEFT JOIN mrbs_room on mrbs_entry.room_id=mrbs_room.id<br />
+			LEFT JOIN mrbs_area on mrbs_area.id=mrbs_room.area_id<br />
+			WHERE (mrbs_entry.start_time+60*60*2) &gt; UNIX_TIMESTAMP(NOW()) and<br />
+			mrbs_entry.status=&#39;a&#39; and mrbs_room.unit_id!=&#39;&#39; and driver.status=&#39;a&#39;<br />
+			ORDER BY start_time;</b></p>
+		
+	    <a id="3"  href="javascript:void(0);" onclick="answerLinkCliked(this);"><b>Answer:</b></a>
+	    <div id="divAnswer3" style="display: none">	
+		<p>
+			&nbsp; The confusion of auto selecting the proper index is caused by the difference between the field used by ORDER BY clause (start_time) and its modified version in WHERE clause.As stated in MySql manual listed as an item performance issues caused by improper use of order by ,it is important to use exact functions or phrases we put on top of an Orderby field and its counterpart in where clause should be the same .</p>
+		<p>
+			&nbsp;&nbsp; here f(start_time)=start_time (unity function) for ORDER BY clause<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f(start_time)=start_time+60*60*2 for WHERE clause<br />
+			which are not equal.If we move 60*60*2 to the other side of inequality we will fix this confusion for Mysql automatic index selector:<br />
+			<br />
+			To fix,change:<br />
+			WHERE (mrbs_entry.start_time+60*60*2) &gt; UNIX_TIMESTAMP(NOW() ...)<br />
+			&nbsp;&nbsp; to<br />
+			WHERE (mrbs_entry.start_time) &gt; UNIX_TIMESTAMP(NOW())-60*60*2 ...)<br />
+			<br />
+			Note: This SQL does not do what it is intended as LEFT JOINS are used for retrieving records from parent table which does or does not exist a record in child table for.</p>
+		<p>
+			Any comparison on WHERE clauses is also applied to null records and if those WHERE clauses contain fields<br />
+			appearing on LEFT JOIN predicates, there will contain null values which will cause the where clause to fail and sift out those null records ,therefore not pertaining LEFT JOIN purpose.<br />
+			<br />
+			Here any field from tables appearing on right hand side of the LEFT JOINs should not appear in where clauses or they need to be appended to an OR IS NULL clause<br />
+			<br />
+			here mrbs_room.unit_id and driver.status are sifting out null records.<br />
+			so you need to change :<br />
+			&nbsp;&nbsp; and mrbs_room.unit_id!=&#39;&#39; and driver.status=&#39;a&#39;<br />
+			&nbsp;&nbsp;&nbsp;&nbsp; to<br />
+			&nbsp;&nbsp; and ( ( mrbs_room.unit_id!=&#39;&#39; OR (mrbs_room.unit_id IS NULL)) and (driver.status=&#39;a&#39; OR (driver.status IS NULL)) )<br />
+			in order to avoid LEFT joins to become INNER joins.</p>
+		</div>
+		<p>
+			<b>Question 4 - coding challenge:</b></p>
+		<p>
+			I have written a caching library which helps speed up applications installed on a variety of hosting<br />
+			<br />
+			architectures (e.g. load&shy;balanced servers, with shared DB). It&rsquo;s recently been open&shy;sourced, so I&rsquo;m<br />
+			<br />
+			inviting you to Beta Test it!<br />
+			<br />
+			I&rsquo;d like you to write a simple, one&shy;page application which utilises this library and demonstrates the<br />
+			<br />
+			advantage of using the caching.<br />
+			<br />
+			I&rsquo;d estimate this should take you an hour or three. If it takes much longer than that to fulfil the basic<br />
+			<br />
+			requirements then don&rsquo;t worry, it&rsquo;s probably due to my library not being documented well enough! Please<br />
+			<br />
+			don&rsquo;t kill yourself over this, I&rsquo;m interested in your approach and grasp of the library as much as delivering<br />
+			<br />
+			a final working demo.<br />
+			<br />
+			https://bitbucket.org/scipilot/layercache<br />
+			<br />
+			Requirements:<br />
+			<br />
+			? Please use CodeIgniter 2 or Laravel 4<br />
+			<br />
+			? Write a single Controller, which accesses dummy data from a &ldquo;Slow&rdquo; Model.<br />
+			<br />
+			? The Slow Model should artificially take a few seconds to respond with data (to mimic some<br />
+			<br />
+			computationally intensive process).<br />
+			<br />
+			? Use the Layer Cache Stack class provided to cache the Slow Model&rsquo;s data.<br />
+			<br />
+			? Utilise at least 2 layers in the Cache Stack (e.g. memory and file).<br />
+			<br />
+			? Provide 2 entry point URLs (i.e. two Controller methods)<br />
+			<br />
+			? One which accesses the Slow Model data directly: this URI should be slow to load.<br />
+			<br />
+			? One which goes via the cache: this URI should be quick to load, on the second load.<br />
+			<br />
+			Delivery<br />
+			<br />
+			? Please supply all source code, including framework, ready to go.<br />
+			<br />
+			? Optionally, provide the application running online<br />
+			<br />
+			Extra Marks<br />
+			<br />
+			? Well documented code<br />
+			<br />
+			? Smart RAD front&shy;end presentation (bootstrap anyone?)</p>
+		<p>
+			<span style="color:#ff0000;"><em>Some</em></span> <span style="color:#ff0000;"><em>work is done for foundation of using the cache for populating a javascript enabled bootstrap typeahead object .But it is abbondened due to some malfunction on ajax post back in lavarel on which I am a new bie.</em></span><br />
+			<br />
+			? Using a database cache layer (e.g.mysqli)<br />
+			&nbsp;&nbsp;<br />
+			? Getting the joke behind &ldquo;Layer Cache&rdquo;<br />
+			&nbsp;&nbsp; <em><span style="color:#ff0000;">If I got your point right ,Layer Cache is not reusable between users,when only memory cache is selected as no memcached is used for sharing this between php worker threads.Even</span></em><em><span style="color:#ff0000;"> for a single user the memory cache which is</span></em><em><span style="color:#ff0000;"> accessed as a class variable(static member) has a life span equal to life time of&nbsp; the current thread.as soon as thread expires,</span></em><br />
+			? Constructive criticism on the library, or spotting a bug.</p>
+		<p>
+			<span style="color:#ff0000;"><em>The library is well desigend to make use of open part of OCP (open close principal) by enabling user to define new layer classes and pushing them in the cache stack as long as they comply to our layer interface(Open Close Principal states that your design should be Open to Extension but Close to Manipulation).The problem with the design I suggest is that the configuration</em></span></p>
+		<p>
+			<span style="color:#ff0000;"><em>of each layer sometimes is dependent on many parameters with varried types which their initialization makes the client code coupled to those configuration details.We can compensate for this by designing factories that internally hide these configuration and only give single point of contact to create an object from and push that to the stack. </em></span></p>
+		<p>
+			<span style="color:#ff0000;"><em>Another design suggestion is to replace array used for stack with a linked list .This way it would be easy to insert or delete more layers of different(and possibly new types) in and out of stack anywhere (not only from  the end) ,on demand.</em></span></p>
+		<p>
+			<br />
+			HINTS<br />
+			<br />
+			The SP_Cache_Layer_HelloWorldProvider class provides an example of how to implement a slow<br />
+			<br />
+			model with caching. See, I&rsquo;ve done the work for you!<br />
+			<br />
+			The Unit Test layercache / test / tests / classes / Cache / Layer / StackTest.php is a good place to see<br />
+			<br />
+			how to write your controller / app, which sets up the stack according to your hosting architecture.</p>
+		<a id="4" href="javascript:void(0);" onclick="answerLinkCliked(this);"><b>Answer:</b></a>
+	    <div id="divAnswer4" style="display: none">	
+		<p>
+			<b>&nbsp; </b>I have used laravel 4 for demonstrating advantage of loading sample slow model using your multi layered cache.</p>
+		<p>
+			Here is the link for an online version hosted one of my already active servers which hosts another codeigniter commercial web app (<a href="http://uquest.co">uquest.co</a> - a lot of front end and backend is done for creating this commercial application and it is close to launch):</p>
+		<p>
+			<a href="http://uquest.co/mazrez/goget/lara/laycash_la/public/index.php/accessTime/main-page"><em>uquest.co/mazrez/goget/lara/laycash_la/public/index.php/accessTime/index</em></a></p>
+		<p>
+			<strong>Work in progress:</strong></p>
+		<p>
+			I tried to create an ajax based jquery ui version that populates tabbed pages from individual previously built pages plus a new&nbsp; &quot;two bootsrap typeaheads&quot; each of which implements a cached or direct access lookup of some data.But I didn&#39;t get the ajax post backs working(post verbs did not return html for some reason) so I did not proceed with them,but it is nearly there:</p>
+		<p>
+			<a href="http://uquest.co/mazrez/goget/lara/laycash_la/public/index.php/accessTime/main-page"><em>uquest.co/mazrez/goget/lara/laycash_la/public/index.php/accessTime/main-page</em></a></p>
+		<p>
+			<strong>Other sample works: </strong></p>
+		<p>
+			&nbsp;Some cool source browser I have written for remote browsing my source code directories.</p>
+		<p>
+			<a href="http://uquest.co/mazrez/me/me.php"><em>uquest.co/mazrez/me/me.php</em></a>&nbsp; (index to a few of my other skill demo source codes- a <a href="http://uquest.co/mazrez/front">front end</a> demo  and a <a  href="http://uquest.co/mazrez/me/me.php?name=D:\Hosting\11123215\html\mazrez/backEndTest.php">back end</a> design patterned demo -please fallow the listed index page on above address for more details)</p>
+		<p>
+			You can browse the above laravel demo source code (<em>the answer to this question) </em>by navigating to goget or clicking this:.<a href="http://uquest.co/mazrez/me/me.php?name=D:\Hosting\11123215\html\mazrez/goget/lara/laycash_la"><em> uquest.co/mazrez/me/me.php?name=D:\Hosting\11123215\html\mazrez/goget/lara/laycash_la</em></a></p>
+		<p>
+			you can download the last version of the cache demo source code bundle here:</p>
+		<p>
+			For demo of user friendly ajax interaction for price calculations of a transport company ,plus their templated html emailing in a wordpress website I&#39;m currently working on,see :&nbsp; (website is live so please don&#39;t send email otherwise custommer service will contact you).</p>
+		<p>
+			<a href="http://taxibox.com.au/mybooking"><em>taxibox.com.au/mybooking</em></a></p>
+		<p>
+			My backend ORM fully designed in-house using design patterns and SOA in action on Media Center of wellknown organization Nehta: (versions of a document and a list of its child documents is displayed .It is downloadable as a zip bundle when clicked)<a href="http://www.nehta.gov.au/media-centre/nehta-publications/download-centre">.</a></p>
+		<p>
+			<em><a href="http://www.nehta.gov.au/media-centre/nehta-publications/download-centre">www.nehta.gov.au/media-centre/nehta-publications/download-centre</a></em></p>
+		    <em><a href="http://www.nehta.gov.au/implementation-resources">www.nehta.gov.au/media-centre/nehta-publications/implementation-resources</a></em></p>
+		<p>
+			My Backbone.js,Require.js,common.js usage for building a single model multiview geographical region mapper.
+		</p>
+		<p>
+		   <em><a href="http://www.nehta.gov.au/our-work/implementation-and-adoption/ehealth-sites/ehealth-maps">www.nehta.gov.au/our-work/implementation-and-adoption/ehealth-sites/ehealth-maps</a></em></p>
+		</div>
+		<p>
+			The End</p>
+			
+	 <script type="text/javascript">
+	 	function answerLinkCliked(element){
+			$("#divAnswer"+element.id).toggle();
+		}
+	 </script>
+	
+   
+@stop

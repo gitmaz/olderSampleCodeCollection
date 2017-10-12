@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" type="text/css" href="tipr/tipr.css">
+    <script src="./js/all.js"></script>
+
+
+
+</head>
+<body>
+
+<script>
+    var rotation = 0;
+    var selections;
+    var colorDivs=new ColorDivs();
+    var colorGrid;
+    var colorPie;
+    var pieChart;
+    var pieData ={
+        datasets: [{
+            data: [
+                11,
+                16,
+                7
+            ],
+            backgroundColor: [
+                "cyan",
+                "magenta",
+                "yellow"
+            ],
+            label: '' // for legend
+        }],
+        labels: []
+    };
+
+    var pieOptions = {
+        segmentShowStroke : false,
+        animateScale : false,
+        responsive : true,
+        animation : false
+
+    };
+
+
+
+
+
+    $(function(){
+        jQuery.fn.rotate = function (degrees) {
+            $(this).css({'transform': 'rotate(' + degrees + 'deg)'});
+            return $(this);
+        };
+
+        drawCircles();
+
+        initPalletes();
+
+        //$('.tip').tipr();
+
+        colorGrid=new ColorGrid(12,-20,10);//750);
+
+        selections=new Selections();
+        selections.assignClickHandler();
+        selections.assignModeSelector();
+
+
+
+
+    });
+
+    m=0;
+</script>
+<div id="divMainPanel">
+    <div id="divColorCirclePanel">
+        <div id="palletes">
+
+            <div id="palletesNavigator">
+                <div id="palletesToLighter"></div>
+                <div id="palletesToDarker"></div>
+            </div>
+            <div id="palletes_frames">
+                <div id="palletes_rects_-1"></div>
+                <div id="palletes_rects_1"></div>
+                <div id="palletes_rects_2" ></div>
+            </div>
+
+        </div>
+    </div>
+    <div id="divGridPanel">
+        <div id="colorGrid"></div>
+    </div>
+</div>
+<div id="message-bar">
+
+    <div id="pieArea" >
+              <canvas id="colorPie"  style="padding: 0px;height:100%"></canvas>
+     </div>
+    <div class="divGaugeAll gaugeWide">
+
+        <div class="divGaugeColor narrowColor" id="divGaugeColor1" ></div>
+        <div class="divGaugeColor" id="divGaugeColor2"></div>
+        <div class="divGaugeTags">
+          &nbsp;c<br>
+          &nbsp;m<br>
+          &nbsp;y<br>
+          &nbsp;k
+        </div>
+        <div class="divProgressBars">
+            <div class="divProgressBack">
+                <div id="divCyanProgress1"></div>
+            </div>
+
+            <div class="divProgressBack">
+                <div id="divMagentaProgress1"></div>
+            </div>
+            <div class="divProgressBack">
+                <div id="divYellowProgress3"></div>
+            </div>
+            <div class="divProgressBack">
+                <div id="divBlackProgress"></div>
+            </div>
+
+            <div class="colorScaleTableDiv leftColorScaleTableDiv hardColorScaleTableDiv" >
+                <table class="greedyTable hardGrid">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="colorScaleTableDiv leftColorScaleTableDiv lightColorScaleTableDiv" >
+                <table class="greedyTable lightGrid">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+		<div class="colorPickNumerics">
+                <div id="divPickR1">0</div>
+                <div id="divPickY1">0</div>
+                <div id="divPickB1">0</div>
+                <div id="divPickK">0</div>
+
+        </div>
+    </div>
+    <div class="divGaugeAll gaugeLessWide">
+        <div class="divGaugeTags">
+            &nbsp;<span id="spnUsuallyO">b</span><br>
+            &nbsp;<span id="spnUsuallyG">r</span><br>
+            &nbsp;<span id="spnUsuallyP">g</span><br>
+            &nbsp;<span id="spnX1">x</span>
+        </div>
+        <div class="divProgressBars">
+            <div class="divProgressBack">
+                <div id="divBlueProgress4"></div>
+            </div>
+
+            <div class="divProgressBack">
+                <div id="divRedProgress4"></div>
+            </div>
+            <div class="divProgressBack">
+                <div id="divGreenProgress4"></div>
+            </div>
+            <div class="divProgressBack">
+                <div id="divCyanProgress5"></div>
+                <div id="divMagentaProgress5"></div>
+                <div id="divYellowProgress5"></div>
+            </div>
+
+            <div class="colorScaleTableDiv middleColorScaleTableDiv hardColorScaleTableDiv" >
+                <table class="greedyTable hardGrid">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="colorScaleTableDiv middleColorScaleTableDiv lightColorScaleTableDiv" >
+                <table class="greedyTable lightGrid">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+		<div class="colorPickNumerics BiggerNumerics">
+                <div id="divPickR2">0</div>
+                <div id="divPickG2">0</div>
+                <div id="divPickB2">0</div>
+                <div id="divPickX">0</div>
+
+        </div>
+    </div>
+    <div class="divGaugeAll gaugeLessWide">
+        <div class="divGaugeTags">
+            <span id="spnUsuallyO2">&nbspo</span><br>
+            <span id="spnUsuallyG2">&nbsp;g</span><br>
+            <span id="spnUsuallyP2">&nbsp;p</span>
+            <span id="spnX2">&nbsp;x</span>
+        </div>
+        <div class="divProgressBars">
+            <div class="divProgressBack">
+                <div id="divOrangeProgress6"></div>
+                <div id="divCyanProgress7"></div>
+            </div>
+
+            <div class="divProgressBack">
+                <div id="divGreenProgress6"></div>
+                <div id="divMagentaProgress7"></div>
+            </div>
+            <div class="divProgressBack">
+                <div id="divPurpleProgress6"></div>
+                <div id="divYellowProgress7"></div>
+            </div>
+            <div class="divProgressBack">
+                <div id="divPurpleProgress6"></div>
+                <div id="divYellowProgress7"></div>
+            </div>
+
+            <div class="colorScaleTableDiv rightColorScaleTableDiv hardColorScaleTableDiv2" >
+                <table class="greedyTable hardGrid">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="colorScaleTableDiv rightColorScaleTableDiv lightColorScaleTableDiv2" >
+                <table class="greedyTable lightGrid">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="colorPickNumerics BiggerNumerics">
+            <div id="divPickO3">0</div>
+            <div id="divPickG3">0</div>
+            <div id="divPickP3">0</div>
+            <div id="divPickXX">0</div>
+
+        </div>
+    </div>
+    <div class="colorPicks">
+        <table class="greedyTable hardGrid">
+            <tr>
+                <td><div class="colorPick" id="divColorPick1"></div></td>
+                <td><div class="colorPick" id="divColorPick2"></div></td>
+                <td><div class="colorPick" id="divColorPick3"></div></td>
+                <td><div class="colorPick" id="divColorPick4"></div></td>
+                <td><div class="colorPick" id="divColorPick5"></div></td>
+                <td><div class="colorPick" id="divColorPick6"></div></td>
+                <td><div class="colorPick" id="divColorPick7"></div></td>
+                <td><div class="colorPick" id="divColorPick8"></div></td>
+            </tr>
+        </table>
+    </div>
+    <div class="mouse-mode-selection">
+        <span><input type="radio" value="single" name="rMouseModeSelection"  class="radios-mouse-selection-mode" checked="checked">S</span>
+        <span><input type="radio" value="three" name="rMouseModeSelection" class="radios-mouse-selection-mode">T</span>
+        <span><input type="radio" value="none" name="rMouseModeSelection" class="radios-mouse-selection-mode">N</span>
+    </div>
+
+</div>
+
+
+
+
+<style>
+    body{
+        padding: 0px;
+        /*background-color: dimgray;*/
+    }
+    #colorPie {
+        margin-top: -15px;
+        margin-left: -30px;
+        height: 70px!important;
+        width: 130px!important;
+    }
+    #divMainPanel{width:100%;height:1000px;background-color: dimgrey;padding: 0px}
+    #divColorCirclePanel{ width:2250px;background-color: dimgrey; float:left ; zoom: 0.79; -moz-transform: scale(0.8); -moz-transform-origin: 0 0;}
+    #divGridPanel{ background-color: dimgrey; width: 45%;height: 100%; float: right; zoom: 0.78; -moz-transform: scale(0.78); -moz-transform-origin: 0 0;}
+    .cl {clear:left;}
+    .tube {width:80px;height:40px; float:left;}
+    .tubeWhite {width:80px;height:40px; float:left; border: 1px solid black; }
+    .floatLeft {width:10px;height:430px;float:left}
+    #paintchart1,#paintchart2,#paintchart3 {width:400px;float:left}
+    .palette{color:#a0a0a0; margin:2px 0 2px 0;float:left}
+    #mixing-palette1,#mixing-palette2,#mixing-palette3{width:400px;height:400px;border:1px solid #ddd; }
+    #rd { padding:4px;display:inline;}
+    #ye {padding:4px;display:inline;}
+    #bl {padding:4px;display:inline; }
+    #hexa {color:#a0a0a0;margin: 0 2px;}
+    #red {background-color:rgb(255,0,0); cursor:pointer;cursor:hand;}
+    #yellow {background-color:rgb(255,255,0);cursor:pointer;cursor:hand;}
+    #blue {background-color:rgb(0,0,255);  ursor:pointer;cursor:hand;}
+    #orange {background-color:rgb(255,160,0); cursor:pointer;cursor:hand;}
+    #green {background-color:rgb(0,128,0); cursor:pointer;cursor:hand;}
+    #purple {background-color:rgb(128,0,128); cursor:pointer;cursor:hand;}
+    #palletes {z-index:7;position:absolute;;left:0px;top:0px;width:750px;height:750px;overflow-y:hidden;overflow-x:scroll }
+    #palletes_frames {width:2300px;height:750px;margin-left:-750px }
+    #palletes_rects_-1 {width:750px;height:750px;background-color: #a0a0a0;min-width: 700px;min-height: 700px;float:left}
+    #palletes_rects_1  {width:750px;height:750px;background-color: #a0a0a0;min-width: 700px;min-height: 700px;float:left}
+    #palletes_rects_2  {width:750px;height:750px;background-color:#a0a0a0;min-width: 700px;min-height: 700px;float:left}
+    #palletesNavigator {
+        width: 64px;
+        height: 34px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+
+
+    }
+    #palletesToLighter {
+        position: relative;
+        width: 30px;
+        height: 30px;
+        background-color: white;
+        border: 1px solid black;
+        float: left;
+
+    }
+    #palletesToDarker {
+        position: relative;
+        width: 30px;
+        height: 30px;
+        background-color: darkgray;
+        border: 1px solid black;
+        float: left;
+    }
+    #colorGrid {width: 700px; ; height: 680px; background: dimgrey;}
+    #message-bar { height: 60px;background-color: #3c1d07; position: fixed ;bottom: 0px;  width: 100%}
+    #pieArea {
+        width:70px;height:100%;max-width:88px;max-height:40px;background-color: #3c1d07;float:left
+        /*-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";*/       /* IE 8 */
+       /* filter: alpha(opacity=50); */ /* IE 5-7 */
+       /* -moz-opacity: 0.5; */         /* Netscape */
+        /*-khtml-opacity: 0.5;  */      /* Safari 1.x */
+       /* opacity: 0.5; */              /* Good browsers */
+    }
+
+    .divGaugeAll{
+        float: left;
+        height:55px;
+    }
+
+    .gaugeWide{
+       width:280px;
+    }
+
+    .gaugeLessWide{
+        width:233px;
+    }
+
+    .divGaugeColor{
+        float: left;
+        width:36px;
+        height: 98%;
+        background-color:black;
+        border: 2px solid white;
+    }
+
+    .narrowColor{
+        width:18px;
+        border-right: 0px;
+    }
+
+    .divGaugeTags{
+        width:20px;
+        height:57px;
+        float:left;
+        background-color: #a0a0a0;
+        line-height: 14px;
+    }
+
+
+    .divProgressBars{
+        float: left;
+        width:150px;
+    }
+    .divProgressBack {
+
+        width: 100%;
+        height: 10px;
+        background-color: darkgray;
+        padding-bottom: 2px;
+        padding-top: 2px;
+    }
+
+    #divRedProgress1 {
+       
+        width: 0%;
+        height: 100%;
+        background-color: #ff0000;
+    }
+    #divYellowProgress1 {
+        
+        width: 0%;
+        height: 100%;
+        background-color: #ffff00;
+    }
+    #divBlueProgress1 {
+        
+        width: 0%;
+        height: 100%;
+        background-color: #0000ff;
+    }
+
+    #divCyanProgress1 {
+
+        width: 0%;
+        height: 100%;
+        background-color: #00ffff;
+    }
+    #divMagentaProgress1 {
+
+        width: 0%;
+        height: 100%;
+        background-color: #ff00ff;
+    }
+    #divYellowProgress3 {
+
+        width: 0%;
+        height: 100%;
+        background-color: #ffff00;
+    }
+
+
+
+    #divCyanProgress5 {
+
+        width: 0%;
+        height: 100%;
+        background-color: #00ffff;
+        float: left;
+    }
+    #divMagentaProgress5 {
+
+        width: 0%;
+        height: 100%;
+        background-color: #ff00ff;
+        float: left;
+    }
+    #divYellowProgress5 {
+
+        width: 0%;
+        height: 100%;
+        background-color: #ffff00;
+        float: right;
+        float: left;
+    }
+
+    #divBlackProgress {
+
+        width: 0%;
+        height: 100%;
+        background-color: #000000;
+        float: right;
+        float: left;
+    }
+
+    #divOrangeProgress1 {
+       
+        width: 0%;
+        height: 100%;
+        background-color: #ff7200;
+        float: left;
+    }
+
+    #divOrangeProgress6 {
+
+        width: 0%;
+        height: 100%;
+        background-color: #ff7200;
+        float: left;
+    }
+
+    #divGreenProgress1 {
+
+        width: 0%;
+        height: 100%;
+        background-color: #008000;
+        float: left;
+    }
+
+    #divGreenProgress6 {
+
+        width: 0%;
+        height: 100%;
+        background-color: #008000;
+        float: left;
+    }
+
+
+    #divPurpleProgress1 {
+        
+        width: 0%;
+        height: 100%;
+        background-color: #800080;
+        float: left;
+    }
+
+    #divPurpleProgress6 {
+
+        width: 0%;
+        height: 100%;
+        background-color: #800080;
+        float: left;
+    }
+
+
+    #divBlueProgress4 {
+
+        width: 0%;
+        height: 100%;
+        background-color: #0000ff;
+        float: left;
+    }
+
+    #divRedProgress4 {
+
+        width: 0%;
+        height: 100%;
+        background-color: #ff0000;
+        float: left;
+    }
+
+
+    #divGreenProgress4 {
+
+        width: 0%;
+        height: 100%;
+        background-color: #00ff00;
+        float: left;
+    }
+
+
+    .colorScaleTableDiv{
+        position: absolute;
+        width: 150px;
+        height: 100%;
+        top: 0;
+     }
+
+
+    .leftColorScaleTableDiv{
+        left:147px;
+    }
+
+    .middleColorScaleTableDiv{
+        left:369px;
+    }
+
+    .rightColorScaleTableDiv{
+        left:603px;
+    }
+
+
+    .colorPickNumerics{
+       
+        width: 20px;
+        height: 55px;
+        float: left;
+        background-color: white;
+        border: 1px solid #3c1d07;
+        font-size: 0.7em;
+        padding-left: 4px;
+    }
+
+    .BiggerNumerics{
+
+        width: 30px;
+    }
+
+    .hardColorScaleTableDiv{
+        z-index: 10;
+    }
+
+    .lightColorScaleTableDiv{
+        z-index: 11;
+    }
+
+    .greedyTable{
+        width:100%;height:100%;border-collapse:collapse;
+    }
+
+    .hardGrid td{
+        border: 2px solid black;
+    }
+
+    .lightGrid td{
+        border: 1px solid black;
+    }
+
+    .colorPicks{
+        width: 150px;
+        position: relative;/*absolute;*/
+        height: 100%;
+        /*top: 0;
+        left: 715px;*/
+        background-color: white;
+        float:left;
+    }
+
+    .colorPick{
+        width:14px;
+        height:51px;
+        background-color: black;
+    }
+
+    .tip:hover {
+
+        border: 3px dotted yellow;
+    }
+
+    .mouse-mode-selection {
+        margin-left: 80px;
+        width: 120px;
+        position: relative;/*absolute;*/
+        height: 100%;
+        background-color: white;
+        float: left;
+    }
+    
+
+</style>
+
+</body>
+</html>
