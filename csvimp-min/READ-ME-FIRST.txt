@@ -1,0 +1,27 @@
+@Copyright Maziar Navabi 1/10/2017
+
+This web app works is tested for php 7, it is built in laravel and angularJS.
+Please First do a composer install in application root to fetch vendor libraries.
+
+In order this web app up and running, please do run the migrations and seeder from command line first
+ php artisan migrate
+ php artisan database:seed
+
+The app welcome page is accessible via:
+localhost/csv/public
+
+Then click on sample application link on this page.
+
+In the introduction page there is a link to a sample csv file to be imported
+to the countries and cities mapping (selected by default).
+first download this sample csv and then drag and drop in upload csv pane.
+
+Then you can view and modify uploaded csv pane and then select proper mapping in
+Mapping & import pane. after all this, press import button(orange button) and information
+in cv file will be imported into corresponding models.
+
+The result is presented in the last pane (View imported result).
+
+for unit test there is no migration so please create two tables (general_test, general_test2) in db each with three integer columns (called a,b,c.
+and e,f,g) use sample_data in test dir for sample csv to be imported to those tables.
+

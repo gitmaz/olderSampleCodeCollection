@@ -1,0 +1,34 @@
+<?php
+//namespace database\seeds;
+
+use Illuminate\Database\Seeder;
+use App\CsvMapping;
+
+
+class CsvMappingTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $csvMapping = new CsvMapping();
+        $csvMapping->name = "Countries and Cities";
+        $csvMapping->mapping = ' [
+             "Country" => [
+                                    ["col_name" =>"id", "csv_index" => 1],
+                                    ["col_name" =>"name", "csv_index" => 2],
+                                    ["col_name" =>"population", "csv_index" => 3]
+                                   ],
+             "City"=>[
+                                    ["col_name" =>"id", "csv_index" => 4],
+                                    ["col_name" =>"name", "csv_index" => 5],
+                                    ["col_name" =>"population", "csv_index" => 6]
+                                    ["col_name" =>"country_id", "csv_index" => 1]
+                                  ]
+            ]';
+        $csvMapping->save();
+    }
+}

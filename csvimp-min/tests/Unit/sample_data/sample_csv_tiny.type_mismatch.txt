@@ -1,0 +1,5 @@
+alfa, beta, gama
+1, 25, 116
+44, a misplaced string, 10
+45, a misplaced string, 10
+9,23,10

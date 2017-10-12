@@ -1,0 +1,2 @@
+country index, country name, country population , country area, country rank , city index, city name, city population, city area, city rank,city country id
+1            , Australia   , 24                 , 1234        ,1             , 110       , Sydney   , 4              , 11       , 2        ,  1
