@@ -1,0 +1,8 @@
+{
+  "autoload": {
+    "psr-0": {"PathFinder": "./"}
+  },
+  "require-dev": {
+    "phpunit/phpunit": "3.7.*"
+  }
+}
