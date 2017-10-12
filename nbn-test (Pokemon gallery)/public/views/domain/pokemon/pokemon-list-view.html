@@ -1,0 +1,39 @@
+<img src="./assets/imgs/loading-small.gif" class="loading-gif" ng-show="isLoadingData"/><br>
+<div class="row" ng-show="!isLoadingData">
+    <div class="col-md-12 ml20">
+        <div>
+            <b class="h60 ml20">Find a Pokemon:</b>
+        </div>
+        <div>
+            <div class="input-prepend ml20">
+                <span class="add-on"><i class="glyphicon glyphicon-search"></i></span><input type="text" size="32"
+                                                                                             id="search_keywords"
+                                                                                             name="search_keywords"
+                                                                                             select-on-click
+                                                                                             ng-change="onSearchBoxTextChange()"
+                                                                                             ng-model="searchPhrase"
+                                                                                             placeholder="please type to search a Pokemon">
+            </div>
+        </div>
+        <!--todo: apply highlighting feature of below commented out ul to newer ul at the bottom of the page-which also has pagination -->
+        <!--div class="pull-left ml20">
+                <ul class="ml20 nav nav-list"  compile="optionsHtml" />
+        </div-->
+        <br>
+        <div ng-show="anyResult()" class="ml20">
+            <button ng-hide="currentPage == 0" ng-click="currentPage=currentPage-1">
+                Previous
+            </button>
+            page {{currentPage+1}}/{{numberOfPages()}}
+            <button ng-hide="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+                Next
+            </button>
+        </div>
+        <ul class="ml20 nav nav-list">
+            <li ng-repeat="pokemonRow in pokemonRowsFiltered | startFrom:currentPage*pageSize | limitTo:pageSize">
+                <a><img src='./assets/imgs/{{pokemonRow.url}}.png' alt='{{pokemonRow.url}}'>{{pokemonRow.name}}</a>
+            </li>
+        </ul>
+
+    </div>
+</div>
