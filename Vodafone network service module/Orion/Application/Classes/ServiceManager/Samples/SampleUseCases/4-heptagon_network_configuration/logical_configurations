@@ -1,0 +1,16 @@
+copy one existinng  logical configuration three times and rename all of its id,logical and physical id to -1,-2,-3
+(to create three new logical configurations ).set parent_physical_ids to eqs -1,-2,-3
+
+the indexVal will be manipulated to keep track of these negative ids using indexVals.txt(instead of passing through tomas indexation)
+
+after doing this,the network is configured through indexVal to have descriptor of vlan_y_id=2000 (only for active elements)
+
+
+explicit subservice:
+mpls_123:
+
+Finally the handover side is defined by adding two additional logical configuration(-14 & -25) having  mpls_id=123 and hand overing to above vlan
+(on equipment -1 ->log conf -1  and equipment -2 ->log conf -2  )
+
+The connection will be done by setting  log conf -14 ->hand_over_config=-1  and log conf -25 ->hand_over_config=-2 .
+This will create a side with subservice functionality from eq -1 and eq -2

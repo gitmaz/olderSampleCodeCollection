@@ -1,0 +1,14 @@
+
+            -1
+      (-1)-------(-2)
+        \         /  .
+         \       /    . -28
+       -3 \     / -2   .
+           \   /        .
+            (-3).......[-8]
+                  -38
+              
+            -1 eq interfaces: (-1,-2)
+            -2 eq interfaces: (-3,  -4,-28)
+            -3 eq interfaces: (-5,  -6,-38)
+            -8 eq interfaces: (-82,-83)      [PATCH PANEL]

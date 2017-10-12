@@ -1,0 +1,7 @@
+copy one existinng  logical configuration three times and rename all of its id,logical and physical id to -1,-2,-3
+(to create three new logical configurations ).set parent_physical_ids to eqs -1,-2,-3
+
+the indexVal will be manipulated to keep track of these negative ids using indexVals.txt(instead of passing through tomas indexation)
+
+
+after doing this,the network is configured through indexVal to have descriptor of vlan_y_id=2000 (only for active elements)

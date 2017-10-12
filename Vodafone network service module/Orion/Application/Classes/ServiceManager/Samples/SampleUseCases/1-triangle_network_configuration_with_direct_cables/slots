@@ -1,0 +1,4 @@
+Insert into SLOT (SLOT_ID,EQUIPMENT_ID,SLOT_MODEL_ID) values (0,0,0);
+Insert into SLOT (SLOT_ID,EQUIPMENT_ID,SLOT_MODEL_ID) values (-1,-1,-1);
+Insert into SLOT (SLOT_ID,EQUIPMENT_ID,SLOT_MODEL_ID) values (-2,-2,-2);
+Insert into SLOT (SLOT_ID,EQUIPMENT_ID,SLOT_MODEL_ID) values (-3,-3,-3);

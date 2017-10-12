@@ -1,0 +1,3 @@
+*inserting parameter_types for vlan ,subnet and mpls
+
+Insert into PARAMETER_TYPE (PARAMETER_TYPE_ID,PARAMETER_TYPE_NAME,FINAL_TYPE,INDEXED) values (30,'hand_over_config','integer',null);

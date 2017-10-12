@@ -1,0 +1,11 @@
+-how to do first time discovery of nodes
+ first: define all service types from UI
+ second:run FirstTimeDiscovery/discoverServicesOnAllInventoryNodes.php
+
+-how to do frequent discovery at the background instead of in house( NetworkServiceHandler::handleServiceQuery: using $isAsynchProcessInPlace=false)
+
+ first make sure $isAsynchProcessInPlace is set to true
+ setup Setup a cron with frequent execution (such as every 30 secs) using:
+  ContinousDiscovery\updateServiceSegmentsSingleNode.cron.php
+
+

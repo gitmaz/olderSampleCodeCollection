@@ -1,0 +1,38 @@
+select
+s.msl_site_id
+,em.eq_model_name
+,e.equipment_id
+,slm.slot_name
+,sl.slot_model_id
+,cm.card_model_name
+,cm.card_model_id
+,cd.card_id
+,ics.interface_object_id
+,im.interface_model_name
+,ics.interface_model_id
+,con.connection_id
+
+from
+inv_site s
+,equipment_model em
+,equipment e
+,slot sl
+,slot_model slm
+,card_model cm
+,card cd
+,interface_connection_state ics
+,interface_model im
+,connection con
+ where
+ s.msl_site_id in ('4088','4400','4403','4419')
+ and e.site_id = s.site_id
+ and  e.equipment_model_id = em.equipment_model_id
+ and e.equipment_model_id in ('26','81')
+ and sl.equipment_id=e.equipment_id
+and slm.slot_model_id=sl.slot_model_id
+ and cd.slot_id=sl.SLOT_ID
+and cm.card_model_id=cd.card_model_id
+and ics.CARD_PHYSICAL_ID=cd.card_id
+and im.interface_model_id=ics.interface_model_id
+and (con.interface_object_id1=ics.interface_object_id)
+

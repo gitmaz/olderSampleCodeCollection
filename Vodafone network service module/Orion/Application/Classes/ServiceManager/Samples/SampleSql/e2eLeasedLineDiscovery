@@ -1,0 +1,107 @@
+select
+
+	                  le.entity_name as service_type1,
+                       lc.log_conf_object_id as log_conf1_id,
+						st.site_name as site_name,
+						 eq.equipment_name as eq_name,
+                          sl.slot_id as slot_id,
+                            cd.card_id as card_id,
+                              ics.interface_object_id as interface_object_id,
+                               con.connection_id as con_id,
+                              ics2.interface_object_id as interface_object_id2,
+                            cd2.card_id as card2_id,
+                          sl2.slot_id as slot2_id,
+                         st2.site_name as site2_name,
+                          eq2.equipment_name as eq2_name,
+
+						   bps.equipment_bypass_id as bps1_id,
+						    ics2p.interface_object_id as interface_object_id2p,
+								                  					  leasedOrMW.connection_id as leasedOrMW_Id,
+						    ics3p.interface_object_id as interface_object_id3p,
+						   bps.equipment_bypass_id as bps2_id,
+
+                         st3.site_name as site3_name,
+                          eq3.equipment_name as eq3_name,
+                           sl3.slot_id as slot3_id,
+                            cd3.card_id as card3_id,
+                             ics3.interface_object_id as interface_object_id3,
+                              con2.connection_id as con2_id,
+                             ics4.interface_object_id as interface_object_id4,
+                            cd4.card_id as card4_id,
+                           sl4.slot_id as slot4_id,
+                         st4.site_name as site4_name,
+                          eq4.equipment_name as eq4_name,
+                        lc4.log_conf_id as log_conf4_id,
+                       le4.entity_name as service_type4
+
+                  from
+
+                      logical_entity le,
+                       logical_configuration lc,
+					              equipment eq,
+                       inv_site st,
+                          slot   sl,
+                           card   cd,
+                             interface_connection_state ics,
+                                                 connection con,
+                             interface_connection_state ics2,
+                           card   cd2,
+                          slot   sl2,
+                          inv_site st2,
+                        equipment eq2,
+						     equipment_bypass bps,
+						        interface_connection_state ics2p,
+                           					  connection leasedOrMW,
+								    interface_connection_state ics3p,
+							equipment_bypass bps2,
+                       inv_site st3,
+						equipment eq3,
+						  slot   sl3,
+                           card   cd3,
+                             interface_connection_state ics3,
+                                                 connection con2,
+                             interface_connection_state ics4,
+                           card   cd4,
+                          slot   sl4,
+                       inv_site st4,
+						equipment eq4,
+                       logical_configuration lc4,
+                      logical_entity le4
+
+                       where
+
+                        lc.log_conf_id in (460906,460905,460903,460904)
+                        AND lc4.log_conf_id in (460906,460905,460903,460904)
+						            AND lc.log_conf_id<>lc4.log_conf_id
+                          AND le.logical_entity_id=lc.logical_entity_id
+                         AND eq.equipment_id=lc.parent_physical_id
+                        AND st.SITE_ID=eq.SITE_ID
+                          AND sl.equipment_id=eq.equipment_id
+                           AND cd.slot_id=sl.slot_id
+                            AND ics.card_physical_id=cd.card_id
+                             AND con.interface_object_id1=ics.interface_object_id
+                            AND ics2.interface_object_id=con.interface_object_id2
+
+                           AND cd2.card_id=ics2.card_physical_id
+                          AND sl2.slot_id=cd2.slot_id
+						   AND eq2.equipment_id=sl2.equipment_id
+						    AND st2.SITE_ID=eq2.SITE_ID
+						      AND bps.card_model_id=cd2.card_model_id AND  bps.interface1_model=ics2.interface_model_id
+						      AND ics2p.card_physical_id=cd2.card_id  AND  ics2p.interface_model_id=bps.interface2_model
+							   AND leasedOrMW.interface_object_id1=ics2p.interface_object_id
+						      AND ics3p.interface_object_id=leasedOrMW.interface_object_id2
+						     AND bps2.interface1_model=ics3p.interface_model_id
+                      AND  cd3.card_id=ics3p.card_physical_id AND  cd3.card_model_id=bps2.card_model_id
+					       AND sl3.slot_id=cd3.slot_id
+                          AND eq3.equipment_id=sl3.equipment_id
+					     AND st3.SITE_ID=eq3.SITE_ID
+
+						   AND ics3.card_physical_id=cd3.card_id AND ics3.interface_model_id=bps2.interface2_model
+                            AND con2.interface_object_id2=ics3.interface_object_id
+                           AND ics4.interface_object_id=con2.interface_object_id1
+                         AND cd4.card_id=ics4.card_physical_id
+                        AND sl4.slot_id=cd4.slot_id
+					   AND eq4.equipment_id=sl4.equipment_id
+             AND st4.SITE_ID=eq4.SITE_ID
+					  AND lc4.parent_physical_id=eq4.equipment_id
+					 AND le4.logical_entity_id=lc4.logical_entity_id

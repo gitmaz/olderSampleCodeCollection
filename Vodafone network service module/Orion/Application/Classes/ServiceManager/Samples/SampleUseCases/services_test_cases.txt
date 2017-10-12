@@ -1,0 +1,20 @@
+
+equips with passive conectivity    eq             214518   ,214519   ,214520  ,  214521
+                                   eq name        alcp2e/01 ,alcp2e/10,MLTN2/01, RTN950
+vlan x=112233                      logconf        460972    460973    460970    460974
+ opt_id=1213                       logconf        1          2         3         4
+
+
+equips with active conn            eq             133013     133012
+ vlan_z_id=2000                    logconfs       461057     461058
+
+
+tagged on antenas
+equips with MW conn(MW links)      eq          214536                   214538
+                                   eq name     2172_UKY22011/DC12/02    2173_UKY22011/DC12/02
+vlan_x_id=21722173                 logconfs    461063                   461064
+
+tagged on active elements
+equips with MW conn(MW links)      eq          214530                   214531
+                                   eq name     2173_ALCP2E/20           2172_ALCP2E/20
+vlan_x_id=21722173                 logconfs    461061                   461062

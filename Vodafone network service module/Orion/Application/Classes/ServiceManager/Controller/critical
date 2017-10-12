@@ -1,0 +1,10 @@
+For service recognition of newly defined service type:
+Parameter type should be added in invConf Service Type definition after service type is registered in logical configuration
+(right click on the tree and set as service and then fallow below instructions)
+
+Parameter type should be automatically populated from saving of the xsds or render xml with service key names and their
+final type (But it does'nt).For every new type we need to manually add these keys and their type to parameter_type table
+(There is a user interface designed to do this in invConf->Service Types->edit -> add to available parameters).
+
+This can be enhanced if we modify Logical configuration module to add to parameter_type as soon as a new type is
+introduced when defining a logical configuration type in the form of XSD and XML.

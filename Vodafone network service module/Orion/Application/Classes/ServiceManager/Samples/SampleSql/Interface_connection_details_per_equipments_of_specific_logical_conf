@@ -1,0 +1,38 @@
+select eq.equipment_name as eq_name
+       ,cm.card_model_name as card_model_name
+       ,cm.card_model_id as card_model_id
+       ,cd.card_id as card_id
+       ,ics.interface_object_id as ics_interface
+       ,im.INTERFACE_MODEL_NAME as int_model_name
+       ,im.INTERFACE_MODEL_ID as int_model_id
+       ,con.connection_id as con_id
+       ,con.interface_object_id1 as int_id1
+       ,con.interface_object_id2 as int_id2
+       ,im2.INTERFACE_MODEL_NAME as int2_model_name
+       ,ics2.INTERFACE_MODEL_ID as int2_model_id
+
+       from
+            logical_configuration lc,
+             equipment eq,
+             slot sl,
+             card cd,
+             card_model cm,
+             interface_connection_state ics,
+             interface_model im,
+             connection con,
+             interface_connection_state ics2,
+             interface_model im2
+       where
+            lc.log_conf_id=460919
+                        AND eq.equipment_id=lc.parent_physical_id
+                        AND sl.equipment_id=eq.equipment_id
+                        AND cd.slot_id=sl.slot_id
+                        AND cm.card_model_id=cd.card_model_id
+                        AND ics.card_physical_id=cd.card_id
+                        AND im.interface_model_id=ics.interface_model_id
+                        AND con.interface_object_id1=ics.interface_object_id
+                        AND ics2.interface_object_id=con.interface_object_id2
+                        AND im2.interface_model_id=ics2.interface_model_id
+
+
+

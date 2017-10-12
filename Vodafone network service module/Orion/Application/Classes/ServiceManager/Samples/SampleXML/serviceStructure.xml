@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<element name="vlan_z_id" type="string" finalType="string" indexed="true" lookupLibraryId="0">
+  <label>Vlan Z ID</label>
+</element>
