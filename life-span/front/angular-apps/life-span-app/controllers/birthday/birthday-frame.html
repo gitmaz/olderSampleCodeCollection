@@ -1,0 +1,37 @@
+<div class="row">
+
+    <fieldset>
+        <legend>Hi <span class="greeting-name" ng-bind="user.name"></span></legend>
+        <legend>Your date of birth:</legend>
+        <div class="col-md-3">Please select your date of birth:</div>
+        <br>
+        <br>
+        <div class="date-picker ml20">
+            <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options"></div>
+        </div>
+    </fieldset>
+
+    <pre>Your Selected birth date is: <em>{{dt | date:'fullDate' }}</em></pre>
+
+    <br>
+    <button ng-hide="result.ready" id="btn_apply" class="btn btn-sm btn-success applyButton" ng-click="saveAsJson();">
+        Calculate Age
+    </button>
+
+</div>
+<div class="row" ng-show="result.ready">
+
+    <fieldset>
+        <legend>Your calculated age :</legend>
+        <pre>Your have lived : <em ng-bind="result.value"></em></pre>
+    </fieldset>
+
+    <br>
+    <button id="btn_apply" class="btn btn-sm btn-success applyButton" ng-click="goBack();">Another calculation</button>
+
+
+</div>
+
+
+
+

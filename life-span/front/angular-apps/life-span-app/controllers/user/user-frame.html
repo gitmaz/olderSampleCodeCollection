@@ -1,0 +1,47 @@
+<div style="margin-left:30px;">
+
+    <fieldset>
+        <legend>Your Name:</legend>
+        <div id="userName">
+            <span class="col-md-3">Please enter your name </span><input type="text" ng-model="user.name"
+                                                                        class="col-md-5" id="txtUserName"/>
+            <br>
+            <br>
+            <a id="aEditlifeSpan" class="btn btn-sm btn-success applyButton" href="" ng-click="goToBirthday()">Next </a>
+        </div>
+    </fieldset>
+
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div ng-show="show_birth_records">
+    <div style="color:#B31F17;font-size: medium;padding-left: 5px;margin-left:30px;">Other users also calculated their
+        life span as fallowing:
+    </div>
+    <fieldset>
+        <br/>
+        <div id="div_usersTable" style="margin-left:30px;">
+            <table class='table' id="tbl_usersTable">
+                <tr>
+                    <th>User Name</th>
+                    <th>Birth Date</th>
+                    <th>Elapsed</th>
+                </tr>
+                <tr ng-repeat="birth_record in birth_records">
+                    <td>{{ birth_record[1] }}</td>
+                    <td>{{ birth_record[2] }}</td>
+                    <td>{{ birth_record[3] }}</td>
+                </tr>
+            </table>
+        </div>
+    </fieldset>
+</div>
+
+
+
+
+

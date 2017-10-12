@@ -1,0 +1,45 @@
+body {
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+.navLinks{
+    padding-left: 20px;
+    padding-bottom: 20px;
+}
+
+
+.applyButton{
+    margin-left: 5px;
+    float: left;
+}
+
+.floatRight{
+    float :right;
+}
+
+legend {
+    padding:0 10px; /* To give a bit of padding on the left and right */
+
+    font-size: large;
+    font-weight: bold;
+}
+
+.ml10{
+    margin-left: 10px;
+}
+
+.ml20{
+    margin-left: 20px;
+}
+
+.date-picker {
+    display:inline-block;
+    min-height:290px;
+}
+.greeting-name{
+    font-weight: bold;
+    font-size: x-large;
+    color: #2AAAD1;
+    text-transform: capitalize;
+}

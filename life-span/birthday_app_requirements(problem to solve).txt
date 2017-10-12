@@ -1,0 +1,15 @@
+Technical test info:
+  
+1.1.  Task.
+
+As a web user, I wish to find out my age accurate to number of hours so that I can impress my friends.
+
+Acceptance Criteria:
+•         A name can be entered.
+•         My date of birth can be entered using a date picker.
+•         User age in years days and hours is displayed.
+•         Name and age of previous submissions is displayed.
+
+1.2.  Deliverables.  You should produce:
+•         All code files required to fulfil the acceptance criteria.
+
