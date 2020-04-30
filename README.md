@@ -1,6 +1,6 @@
 This is Maziar Navabi sample codes which shows his skills on an spectrum of web technologies.
 
-# sampleCodes
+# olderSampleCodeCollection
 This is a collection of small projects demonstrating my skills in backend as well as frontend web development
 
 
